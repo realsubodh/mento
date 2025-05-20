@@ -36,7 +36,7 @@ export const Menu = ({ children }) => {
   return (
     <motion.nav
       animate={{
-        width: isShrunk ? "40%" : "80%",
+        width: isShrunk ? "50%" : "75%",
       }}
       transition={{ duration: 0.4, ease: "easeInOut" }}
       initial={{ width: "90%" }}
