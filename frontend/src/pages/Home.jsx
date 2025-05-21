@@ -14,7 +14,7 @@ export const Home = () => {
     <>
       {/* First Page */}
       <div
-        className=" min-h-screen w-full flex flex-col items-center justify-between gap-36 sm:gap-24 md:gap-24 lg:gap-50  opacity-100 [background-image:radial-gradient(#000_0.55px,transparent_0.55px),radial-gradient(#000_0.55px,#e7e5e4_0.55px)] [background-size:22px_22px] [background-position:0_0,11px_11px] "
+        className=" min-h-screen w-full flex flex-col items-center justify-between gap-36 sm:gap-24 md:gap-24 lg:gap-50"
         style={{ backgroundColor: "oklch(0.923 0.003 48.717)" }}
       >
         <div className=" flex justify-center">
@@ -105,12 +105,12 @@ export const Home = () => {
 
       {/* Fourth Page */}
       <div className="w-full h-fit">
-        <Cta/>
+        <Cta />
       </div>
 
       {/* Footer */}
       <div>
-          <Footer/>
+        <Footer />
       </div>
     </>
   );
