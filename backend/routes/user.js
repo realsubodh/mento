@@ -4,7 +4,8 @@ const zod = require("zod");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-const { JWT_SECRET } = process.env;
+const authMiddleware = require("../authMiddleware");
+
 
 // signup || zod validation
 const signupSchema = zod.object({
@@ -39,13 +40,13 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 5);
 
     // creating user
-    const user = await User.create({
+    await User.create({
       username,
       password: hashedPassword,
       firstName,
       lastName,
     });
-    res.status(200).json({
+    return res.status(200).json({
       message: "User created successfully!!",
     });
   } catch (error) {
@@ -54,6 +55,7 @@ router.post("/signup", async (req, res) => {
       error: error.message,
     });
   }
+});
 
   // signin with zod validation
   const signinSchema = zod.object({
@@ -103,6 +105,10 @@ router.post("/signup", async (req, res) => {
         })
     }
   });
-});
+
+
+  router.get("/me", authMiddleware, async (req, res) => {
+    res.json({ message: "Protected route access granted!", userId: req.userId });
+  });
 
 module.exports = router;
