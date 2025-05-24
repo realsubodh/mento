@@ -9,5 +9,3 @@ router.use("/folder", folderRouter)
 router.use("/bookmark", bookmarkRouter)
 
 module.exports = router
-
-// 68320878f7ef2251e7f19615

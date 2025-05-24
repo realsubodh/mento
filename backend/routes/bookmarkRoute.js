@@ -40,18 +40,44 @@ router.post("/", authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router
+// Get all bookmarks for a folder
+router.get("/folder/:folderId", authMiddleware, async (req, res) => {
+    try {
+      const folderId = req.params.folderId;
+      const userId = req.userId;
+  
+      // check if folder belongs to user
+      const folder = await Folder.findOne({ _id: folderId, user: userId });
+      if (!folder) {
+        return res.status(404).json({ msg: "Folder not found!" });
+      }
+  
+      // find bookmarks in that folder
+      const bookmarks = await Bookmark.find({ folder: folderId, user: userId });
+  
+      res.status(200).json({ bookmarks });
+    } catch (error) {
+      res.status(500).json({ msg: "Failed to fetch bookmarks", error: error.message });
+    }
+  });
 
-/*"msg": "bookmark created successfully!",
-    "bookmark": {
-        "url": "https://www.x.com/watch?v=dQw4w9WgXcQ",
-        "title": "Never Gonna Give You Up",
-        "tags": [],
-        "folder": "68320878f7ef2251e7f19615",
-        "user": "68320877f7ef2251e7f19611",
-        "_id": "68320c2f87258d1757341a77",
-        "savedAt": "2025-05-24T18:13:03.440Z",
-        "createdAt": "2025-05-24T18:13:03.443Z",
-        "updatedAt": "2025-05-24T18:13:03.443Z",
-        "__v": 0
-    } */
+  // deleting bookmark
+  router.delete("/:id", authMiddleware, async (req, res) => {
+    try {
+      const bookmarkId = req.params.id;
+      const userId = req.userId;
+  
+      // Find the bookmark and make sure it belongs to the user
+      const bookmark = await Bookmark.findOne({ _id: bookmarkId, user: userId });
+      if (!bookmark) {
+        return res.status(404).json({ msg: "Bookmark not found or unauthorized" });
+      }
+  
+      await Bookmark.deleteOne({ _id: bookmarkId });
+      res.status(200).json({ msg: "Bookmark deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ msg: "Failed to delete bookmark", error: error.message });
+    }
+  });
+
+module.exports = router
