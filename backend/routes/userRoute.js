@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const authMiddleware = require("../authMiddleware");
+const createDefaultFolders = require("../utils/createDefaultFolders");
 
 
 // signup || zod validation
@@ -40,12 +41,16 @@ router.post("/signup", async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 5);
 
     // creating user
-    await User.create({
+    const user = await User.create({
       username,
       password: hashedPassword,
       firstName,
       lastName,
     });
+
+    // creating three default folders
+    await createDefaultFolders(user._id)
+
     return res.status(200).json({
       message: "User created successfully!!",
     });
@@ -55,6 +60,7 @@ router.post("/signup", async (req, res) => {
       error: error.message,
     });
   }
+
 });
 
   // signin with zod validation
@@ -106,9 +112,5 @@ router.post("/signup", async (req, res) => {
     }
   });
 
-
-  router.get("/me", authMiddleware, async (req, res) => {
-    res.json({ message: "Protected route access granted!", userId: req.userId });
-  });
 
 module.exports = router;
