@@ -1,13 +1,13 @@
-import { Menu } from "../components/ui/navbar-menu";
+import { Menu } from "../components/landing/navbar-menu";
 import logo from "../assets/logomento.png";
-import { Button } from "../components/ui/button";
+import { Button } from "../components/landing/button";
 import { useNavigate } from "react-router-dom";
-import { Heading } from "../components/ui/header";
-import { Title } from "../components/ui/heading";
+import { Heading } from "../components/landing/header";
+import { Title } from "../components/landing/heading";
 import Dashboard from "../assets/dashboard.png";
-import { WobbleCard } from "../components/ui/wobble-card";
-import { Cta } from "../components/ui/cta";
-import { Footer } from "../components/ui/footer";
+import { WobbleCard } from "../components/landing/wobble-card";
+import { Cta } from "../components/landing/cta";
+import { Footer } from "../components/landing/footer";
 export const Home = () => {
   const navigate = useNavigate();
   return (
