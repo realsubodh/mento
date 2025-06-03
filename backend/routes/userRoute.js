@@ -96,7 +96,10 @@ router.post("/signup", async (req, res) => {
 
       // generating jwt token
       const token = jwt.sign(
-        {userId: user._id},
+        {
+          userId: user._id,
+          name : `${user.firstName} ${user.lastName}`
+        },
         process.env.JWT_SECRET
     )
     return res.status(200).json({

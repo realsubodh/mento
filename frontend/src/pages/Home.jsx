@@ -20,7 +20,7 @@ export const Home = () => {
         <div className=" flex justify-center">
           <Menu>
             <img src={logo} alt="Logo" className="h-35 w-auto " />
-            <Button label={"Login"} onClick={() => navigate("/auth")} />
+            <Button label={"Login"} onClick={() => navigate("/signin")} />
           </Menu>
         </div>
         <div className="w-[60%] h-auto">

@@ -85,27 +85,5 @@ router.delete("/:id", authMiddleware, async (req, res, next) => {
   }
 });
 
-/* 
-"_id": "6831f2094d950da04c87462f",
-        "name": "YouTube",
-        "isDefault": true,
-        "user": "6831f2094d950da04c87462d",
-        "bookmarks": [],
-        "createdAt": "2025-05-24T16:21:29.141Z",
-        "updatedAt": "2025-05-24T16:21:29.141Z",
-        "__v": 0 
-        
-        "msg": "folder created successfully!",
-        "folder": {
-        "name": "Custom Folder",
-        "isDefault": false,
-        "user": "6831f2094d950da04c87462d",
-        "bookmarks": [],
-        "_id": "6831f3f3d7d3eda883692397",
-        "createdAt": "2025-05-24T16:29:39.264Z",
-        "updatedAt": "2025-05-24T16:29:39.264Z",
-        "__v": 0
-    }
-        */
 
 module.exports = router;
