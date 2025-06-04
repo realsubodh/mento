@@ -58,7 +58,7 @@ export const DesktopSidebar = ({ className, children, ...props }) => {
         className
       )}
       animate={{
-        width: animate ? (open ? "250px" : "100px") : "300px",
+        width: animate ? (open ? "250px" : "100px") : "250px",
       }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
@@ -106,23 +106,28 @@ export const MobileSidebar = ({ className, children, ...props }) => {
 
 export const SidebarLink = ({ link, className, ...props }) => {
   const { open, animate } = useSidebar();
+
   return (
     <a
-      href={link.href}
-      className={cn(
-        "flex items-center justify-start gap-2 group/sidebar ml-4.5 py-4",
-        className
-      )}
-      {...props}>
-      {link.icon}
-      <motion.span
-        animate={{
-          display: animate ? (open ? "inline-block" : "none") : "inline-block",
-          opacity: animate ? (open ? 1 : 0) : 1,
-        }}
-        className="text-white dark:text-neutral-100 text-md group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block !p-0 !m-0">
-        {link.label}
-      </motion.span>
-    </a>
+    href={link.href}
+    className={cn(
+      "flex items-center gap-4 ml-4.5 group/sidebar py-4",
+      className
+    )}
+    {...props}
+  >
+    {link.icon}
+
+    <motion.span
+      animate={{
+        display: animate ? (open ? "inline-block" : "none") : "inline-block",
+        opacity: animate ? (open ? 1 : 0) : 1,
+      }}
+      className="text-neutral-700 font-sans dark:text-neutral-200 text-md group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block"
+    >
+      {link.label}
+    </motion.span>
+  </a>
   );
 };
+

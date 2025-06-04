@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { Signin } from "./pages/Signin";
 import { Dashboard } from "./pages/Dashboard";
 import { PrivateRoute } from "./components/PrivateRoute";
+import { Folders } from "./pages/Folders";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/folders" element={<Folders/>}/>
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
     </>
