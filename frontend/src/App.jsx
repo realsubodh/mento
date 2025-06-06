@@ -1,18 +1,21 @@
 import { Route, Routes } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
 import "./App.css";
-import { Home } from "./pages/Home";
+import { LandingPage } from "./pages/LandingPage";
 import { Signup } from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
 import { Signin } from "./pages/Signin";
 import { Dashboard } from "./pages/Dashboard";
 import { PrivateRoute } from "./components/PrivateRoute";
-import { Folders } from "./pages/Folders";
 
+
+const Home = lazy(()=> import("./pages/Home"))
+const Folders = lazy(() => import("./pages/Folders"));
 function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route
@@ -22,8 +25,15 @@ function App() {
               <Dashboard />
             </PrivateRoute>
           }
-        />
-        <Route path="/folders" element={<Folders/>}/>
+        >
+          <Route index element={<Home />} />
+          <Route
+            path="folders"
+            element={
+                  <Folders />
+            }
+          />
+        </Route>
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
     </>

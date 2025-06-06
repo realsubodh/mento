@@ -3,6 +3,7 @@ import { cn } from "../../lib/utils";
 import React, { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { IconMenu2, IconX } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 const SidebarContext = createContext(undefined);
 
@@ -54,7 +55,7 @@ export const DesktopSidebar = ({ className, children, ...props }) => {
   return (
     <motion.div
       className={cn(
-        "h-screen px-4 py-4 hidden md:flex flex-col bg-white dark:bg-neutral-800 shrink-0",
+        "h-screen px-4 py-4 hidden md:flex flex-col bg-white dark:bg-[#F5F4ED] shrink-0",
         className
       )}
       animate={{
@@ -92,7 +93,7 @@ export const MobileSidebar = ({ className, children, ...props }) => {
               className
             )}>
             <div
-              className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
+              className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-black"
               onClick={() => setOpen(false)}>
               <IconX />
             </div>
@@ -108,8 +109,8 @@ export const SidebarLink = ({ link, className, ...props }) => {
   const { open, animate } = useSidebar();
 
   return (
-    <a
-    href={link.href}
+    <Link
+    to={link.href}
     className={cn(
       "flex items-center gap-4 ml-4.5 group/sidebar py-4",
       className
@@ -123,11 +124,11 @@ export const SidebarLink = ({ link, className, ...props }) => {
         display: animate ? (open ? "inline-block" : "none") : "inline-block",
         opacity: animate ? (open ? 1 : 0) : 1,
       }}
-      className="text-neutral-700 font-sans dark:text-neutral-200 text-md group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block"
+      className="text-black font-sans dark:text-black text-md group-hover/sidebar:translate-x-1 transition duration-150 whitespace-pre inline-block"
     >
       {link.label}
     </motion.span>
-  </a>
+  </Link>
   );
 };
 

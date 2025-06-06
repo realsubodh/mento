@@ -1,117 +1,168 @@
-import { Menu } from "../components/landing/navbar-menu";
-import logo from "../assets/logomento.png";
-import { Button } from "../components/landing/button";
-import { useNavigate } from "react-router-dom";
-import { Heading } from "../components/landing/header";
-import { Title } from "../components/landing/heading";
-import Dashboard from "../assets/dashboard.png";
-import { WobbleCard } from "../components/landing/wobble-card";
-import { Cta } from "../components/landing/cta";
-import { Footer } from "../components/landing/footer";
-export const Home = () => {
-  const navigate = useNavigate();
-  return (
-    <>
-      {/* First Page */}
-      <div
-        className=" min-h-screen w-full flex flex-col items-center justify-between gap-36 sm:gap-24 md:gap-24 lg:gap-50"
-        style={{ backgroundColor: "oklch(0.923 0.003 48.717)" }}
-      >
-        <div className=" flex justify-center">
-          <Menu>
-            <img src={logo} alt="Logo" className="h-35 w-auto " />
-            <Button label={"Login"} onClick={() => navigate("/signin")} />
-          </Menu>
-        </div>
-        <div className="w-[60%] h-auto">
-          <Heading />
-          <img
-            src={Dashboard}
-            alt=""
-            className="w-full h-fit rounded-4xl text-center mt-10 mb-10"
-          />
-        </div>
-      </div>
+import {
+    IconFolderPlus,
+    IconBookmarkPlus,
+  } from "@tabler/icons-react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useUser } from "../hooks/userHook";
+import { motion, AnimatePresence } from "framer-motion";  
 
-      {/* Second Page */}
-      <div className="w-full min-h-screen flex flex-col items-center bg-black">
-        <Title />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-7xl p-15 pt-0 mx-auto w-full mt-20">
-          <WobbleCard
-            containerClassName="col-span-1 lg:col-span-2 h-full bg-gradient-to-br from-purple-800 to-indigo-700 min-h-[500px] lg:min-h-[300px]"
-            className=""
-          >
-            <div className="max-w-md">
-              <h2 className="text-left text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-white">
-                Save What Matters, Instantly.
+const Home =()=>{
+    const user = useUser();
+    const [link, setLink] = useState("");
+    const [folders, setFolders] = useState([]);
+    const [selectedFolder, setSelectedFolder] = useState(null);
+    const [showDropdown, setShowDropdown] = useState(false);
+  
+    const getGreeting = () => {
+      const hour = new Date().getHours();
+      if (hour < 12) return "Good Morning";
+      if (hour < 18) return "Good Afternoon";
+      return "Good Evening";
+    };
+  
+    const toggleDropdown = async () => {
+      if (!showDropdown) {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          toast.error("You're not logged in.");
+          return;
+        }
+    
+        try {
+          const res = await fetch("http://localhost:3000/api/v1/folder/", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+    
+          const data = await res.json();
+          console.log("Fetched folders:", data); // <- This should now log an array
+    
+          if (res.ok && Array.isArray(data)) {
+            setFolders(data);
+            setShowDropdown(true);
+          } else {
+            toast.error("Could not fetch folders.");
+          }
+        } catch (error) {
+          console.error("Fetch error:", error);
+          toast.error("Failed to fetch folders.");
+        }
+      } else {
+        setShowDropdown(false);
+      }
+    };
+    
+    
+  
+    const handleFolderSelect = (name) => {
+      setSelectedFolder(name);
+      setShowDropdown(false);
+    };
+  
+    const handleAddLink = async () => {
+      if (!link || !selectedFolder) {
+        toast.error("Please enter a link and choose a folder.");
+        return;
+      }
+  
+      try {
+        const res = await fetch("http://localhost:3000/api/v1/bookmark/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            url: link,
+            folderName: selectedFolder,
+          }),
+        });
+  
+        const data = await res.json();
+        if (res.ok) {
+          toast.success("Link added successfully!");
+          setLink("");
+          setSelectedFolder(null);
+        } else {
+          toast.error( "Failed to add link.");
+        }
+      } catch (error) {
+        console.error("Error adding link:", error);
+      }
+    };
+  
+    return (
+        <>
+        <div className="flex flex-col items-center gap-6 max-w-md px-4 w-full relative">
+          {user && (
+            <div className="px-8 py-6 w-[600px] text-center">
+              <h2 className="text-7xl font-semibold text-black  ">
+                {getGreeting()}! {user?.name?.split(" ")[0] ?? ""}
               </h2>
-              <p className="mt-4 text-left text-base text-neutral-200">
-                Mento helps you bookmark videos, posts, and resources with smart
-                tags so you never lose a gem again.
-              </p>
             </div>
-            <img
-              src="/dash.webp"
-              width={400}
-              height={400}
-              alt="Save demo"
-              className="absolute -right-10 lg:-right-[25%] -bottom-7 object-contain rounded-2xl"
-            />
-          </WobbleCard>
-
-          <WobbleCard containerClassName="col-span-1 min-h-[300px] bg-gradient-to-br from-pink-600 to-rose-500">
-            <h2 className="max-w-80 text-left text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-white">
-              Smarter Search, Less Scroll.
-            </h2>
-            <p className="mt-4 text-left text-base text-neutral-100">
-              Use intelligent search and filters to retrieve your saved content
-              in seconds — no more endless scrolling.
-            </p>
-          </WobbleCard>
-
-          <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-gradient-to-br from-blue-900 to-blue-700 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
-            <div className="max-w-md">
-              <h2 className="text-left text-xl md:text-2xl lg:text-3xl font-semibold tracking-tight text-white">
-                Start Your Mento Journey Today.
-              </h2>
-              <p className="mt-4 text-left text-base text-neutral-200">
-                In a world overflowing with content, keeping track of valuable
-                insights, reels, videos, and resources shouldn’t be a chore.
-                <br /> Join early adopters who are taking control of their
-                digital memory. It's free and powerful.
-              </p>
-            </div>
-            <img
-              src="/human.webp"
-              width={400}
-              height={400}
-              alt="User journey demo"
-              className="absolute -right-10 md:-right-[15%] lg:-right-[10%] -bottom-10 object-contain rounded-2xl"
-            />
-          </WobbleCard>
+          )}
         </div>
-      </div>
 
-      {/* Third page */}
-      <div className="w-full h-fit sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center px-4">
-        <div className="w-full max-w-6xl bg-black/100 backdrop-blur-lg m-6 rounded-2xl p-5 md:m-[5%] shadow-lg">
-          <img
-            src="/mentoarch.png"
-            alt="Mento Architecture"
-            className="w-full h-auto object-contain"
+        
+        <div className="relative w-[600px] bg-white text-black rounded-3xl shadow-lg p-6 pt-8 pb-25 group">
+          {/* Input Field */}
+          <input
+            id="linkInput"
+            type="text"
+            className="w-full bg-transparent text-md focus:outline-none placeholder:text-gray-500 break-normal"
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            placeholder="Paste your link here..."
           />
-        </div>
-      </div>
 
-      {/* Fourth Page */}
-      <div className="w-full h-fit">
-        <Cta />
-      </div>
+          {/* Bottom Left: Choose Folder */}
+          <div className="absolute bottom-2 left-4">
+            <button
+              onClick={toggleDropdown}
+              className="rounded-full p-1.5 hover:bg-[#C96342] hover:text-white cursor-pointer"
+              title="Choose Folder"
+            >
+              <IconFolderPlus className="w-6 h-6" />
+            </button>
 
-      {/* Footer */}
-      <div>
-        <Footer />
-      </div>
-    </>
-  );
-};
+            {/* Dropdown with Framer Motion */}
+            <AnimatePresence>
+              {showDropdown && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-4 left-0 w-48 bg-white shadow-lg rounded-md z-50 "
+                >
+                  {folders.map((folder) => (
+                    <div
+                      key={folder._id}
+                      onClick={() => handleFolderSelect(folder.name)}
+                      className="px-4 py-2 hover:bg-gray-100  cursor-pointer text-black"
+                    >
+                      {folder.name}
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          {/* Bottom Right: Add Link */}
+          <div className="absolute bottom-2 right-4">
+            <button
+              onClick={handleAddLink}
+              className="rounded-full p-1.5 hover:bg-[#C96342] hover:text-white cursor-pointer"
+              title="Add Link"
+            >
+              <IconBookmarkPlus className="w-6 h-6" />
+            </button>
+          </div>
+        </div></>
+    )
+}
+
+export default Home
