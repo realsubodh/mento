@@ -35,7 +35,7 @@ export const Dashboard = () => {
             />
             <SidebarLink
               link={{
-                href: "/bookmarks",
+                href: "/dashboard/bookmarks",
                 label: "Bookmarks",
                 icon: <IconBookmark className="text-black" size={20} />,
               }}

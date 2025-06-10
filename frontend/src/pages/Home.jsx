@@ -121,7 +121,7 @@ const Home =()=>{
           <div className="absolute bottom-2 left-4">
             <button
               onClick={toggleDropdown}
-              className="rounded-full p-1.5 hover:bg-[#C96342] hover:text-white cursor-pointer"
+              className="rounded-full p-1.5 hover:bg-blue-600 hover:text-white cursor-pointer"
               title="Choose Folder"
             >
               <IconFolderPlus className="w-6 h-6" />
@@ -155,7 +155,7 @@ const Home =()=>{
           <div className="absolute bottom-2 right-4">
             <button
               onClick={handleAddLink}
-              className="rounded-full p-1.5 hover:bg-[#C96342] hover:text-white cursor-pointer"
+              className="rounded-full p-1.5 hover:bg-blue-600 hover:text-white cursor-pointer"
               title="Add Link"
             >
               <IconBookmarkPlus className="w-6 h-6" />

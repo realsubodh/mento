@@ -84,6 +84,21 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// GET all bookmarks of the logged-in user sorted by creation time
+router.get("/all", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const bookmarks = await Bookmark.find({ user: userId })
+      .sort({ createdAt: -1 }); // DESC order = newest first
+
+    res.status(200).json({ bookmarks });
+  } catch (error) {
+    res.status(500).json({ msg: "Failed to fetch all bookmarks", error: error.message });
+  }
+});
+
+
 module.exports = router;
 
 

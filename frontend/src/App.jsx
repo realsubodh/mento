@@ -11,6 +11,9 @@ import { PrivateRoute } from "./components/PrivateRoute";
 
 const Home = lazy(()=> import("./pages/Home"))
 const Folders = lazy(() => import("./pages/Folders"));
+const FolderView = lazy(() => import("./pages/FolderView"));
+const AllBookmarks = lazy(() => import("./pages/Allbookmark"));
+
 function App() {
   return (
     <>
@@ -27,12 +30,14 @@ function App() {
           }
         >
           <Route index element={<Home />} />
+          <Route path="bookmarks" element={<AllBookmarks />} />
           <Route
             path="folders"
             element={
                   <Folders />
             }
           />
+          <Route path="folder/:folderId" element={<FolderView/>}/>
         </Route>
       </Routes>
       <Toaster position="top-right" reverseOrder={false} />
