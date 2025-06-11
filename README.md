@@ -11,7 +11,6 @@
   <br />
   <a href="#introduction"><strong>Introduction</strong></a> ·
   <a href="#tech-stack"><strong>Tech Stack</strong></a> ·
-  <a href="#features"><strong>Features</strong></a> ·
   <a href="#architecture"><strong>Architecture</strong></a> ·
   <a href="#self-hosting"><strong>Self-hosting</strong></a> 
 </p>
@@ -87,7 +86,7 @@ Database (MongoDB)
 
 <br/>
 
-## Self-Hosting / Local Development
+## Self-Hosting
 
 You can run **Mento** locally with full functionality using the following steps:
 
