@@ -1,3 +1,5 @@
+// I have vibe-coded the ui of this file with Claude.
+
 import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 
@@ -245,7 +247,7 @@ const AllBookmarks = () => {
                     ${gridSpan}
                     group relative overflow-hidden rounded-2xl 
                     bg-white/80 backdrop-blur-sm border border-white/20
-                    shadow-lg hover:shadow-2xl transition-all duration-500
+                    shadow-lg hover:shadow-2xl transition-all duration-300
                     hover:scale-[1.02] hover:-translate-y-1
                     cursor-pointer min-h-[180px]
                   `}
@@ -279,7 +281,7 @@ const AllBookmarks = () => {
                     {/* URL Display */}
                     <div className="flex-1 flex flex-col justify-between">
                       <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 mb-4">
-                        <p className="text-sm text-gray-600 break-all leading-relaxed line-clamp-3">
+                        <p className="text-sm text-blue-700 break-all leading-relaxed line-clamp-3">
                           {bookmark.url}
                         </p>
                       </div>
@@ -308,7 +310,7 @@ const AllBookmarks = () => {
                   </div>
 
                   {/* Hover Border Effect */}
-                  <div className="absolute inset-0 rounded-2xl border-2 border-blue-200 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 rounded-2xl  opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               );
             })}

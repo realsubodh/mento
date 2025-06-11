@@ -111,7 +111,7 @@ const Home =()=>{
           <input
             id="linkInput"
             type="text"
-            className="w-full bg-transparent text-md focus:outline-none placeholder:text-gray-500 break-normal"
+            className="w-full bg-transparent text-md focus:outline-none placeholder:text-gray-500 break-normal text-blue-700"
             value={link}
             onChange={(e) => setLink(e.target.value)}
             placeholder="Paste your link here..."

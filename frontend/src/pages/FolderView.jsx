@@ -132,7 +132,7 @@ const FolderView = () => {
                                     {/* URL Display */}
                                     <div className="mt-auto">
                                         <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                                            <p className="text-sm text-gray-600 break-all leading-relaxed">
+                                            <p className="text-sm text-blue-700 break-all leading-relaxed">
                                                 {bookmark.url}
                                             </p>
                                         </div>
