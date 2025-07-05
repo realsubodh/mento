@@ -133,4 +133,5 @@ If you found Mento helpful or inspiring:
 Every star keeps this project alive and motivates further development. Thank you!
 
 ## Demo
-
+Watch the demo video here! <br>
+[Link](https://x.com/real_subodh/status/1932639687283216860)
